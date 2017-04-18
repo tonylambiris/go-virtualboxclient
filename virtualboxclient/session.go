@@ -1,6 +1,6 @@
 package virtualboxclient
 
-import "github.com/appropriate/go-virtualboxclient/vboxwebsrv"
+import "github.com/tonylambiris/go-virtualboxclient/vboxwebsrv"
 
 type Session struct {
 	virtualbox      *VirtualBox
