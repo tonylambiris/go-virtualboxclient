@@ -162,18 +162,6 @@ func (m *Machine) AttachDevice(medium *Medium) error {
 		return err
 	}
 
-	pc, err := sc.GetPortCount()
-	if err != nil {
-		return err
-	}
-
-	spc := uint32(pn) + 1
-	if spc > pc {
-		if err := sc.SetPortCount(spc); err != nil {
-			return err
-		}
-	}
-
 	request := vboxwebsrv.IMachineattachDevice{
 		This:           sm.managedObjectId,
 		Name:           sc.Name,
@@ -189,10 +177,6 @@ func (m *Machine) AttachDevice(medium *Medium) error {
 	}
 
 	if err := sm.SaveSettings(); err != nil {
-		return err
-	}
-
-	if err := m.Unlock(session); err != nil {
 		return err
 	}
 

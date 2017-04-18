@@ -26,9 +26,17 @@ func New(username, password, url string, tls bool, controllerName string) *Virtu
 }
 
 func (vb *VirtualBox) CreateHardDisk(format, location string) (*Medium, error) {
-	request := vboxwebsrv.IVirtualBoxcreateHardDisk{This: vb.managedObjectId, Format: format, Location: location}
+	var am vboxwebsrv.AccessMode
+	am = "ReadWrite"
+	var dt vboxwebsrv.DeviceType
+	dt = "HardDisk"
+	request := vboxwebsrv.IVirtualBoxcreateMedium{
+		This: vb.managedObjectId, Format: format, Location: location,
+		AccessMode:      &am,
+		ADeviceTypeType: &dt,
+	}
 
-	response, err := vb.IVirtualBoxcreateHardDisk(&request)
+	response, err := vb.IVirtualBoxcreateMedium(&request)
 	if err != nil {
 		return nil, err // TODO: Wrap the error
 	}
